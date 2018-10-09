@@ -25,7 +25,7 @@ ENV HOME=/home/bbs
 
 RUN cd /home/bbs \
     && sh -c "curl -L https://github.com/ptt/pttbbs/archive/7e580b6434f22e57c194c9f59482c29582ef62b4.tar.gz | tar -zxv" \
-    && mv pttbbs-ae32c2897c33e3a62f8fc58ced187337cd4c6fd4 pttbbs \
+    && mv pttbbs-7e580b6434f22e57c194c9f59482c29582ef62b4 pttbbs \
     && cd /home/bbs/pttbbs 
 COPY file/pttbbs_conf /home/bbs/pttbbs/pttbbs.conf
 RUN cd /home/bbs/pttbbs && bmake all install clean
