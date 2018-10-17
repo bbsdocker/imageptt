@@ -14,7 +14,7 @@ RUN apt update \
         bmake \
         ccache \
         clang \
-	curl \
+        curl \
         ca-certificates \
         libevent-dev \
         pkg-config \
@@ -22,10 +22,11 @@ RUN apt update \
 
 USER bbs
 ENV HOME=/home/bbs
+ARG GITVER=7e580b6434f22e57c194c9f59482c29582ef62b4
 
 RUN cd /home/bbs \
-    && sh -c "curl -L https://github.com/ptt/pttbbs/archive/7e580b6434f22e57c194c9f59482c29582ef62b4.tar.gz | tar -zxv" \
-    && mv pttbbs-7e580b6434f22e57c194c9f59482c29582ef62b4 pttbbs \
+    && sh -c "curl -L https://github.com/ptt/pttbbs/archive/$GITVER.tar.gz | tar -zxv" \
+    && mv pttbbs-$GITVER pttbbs \
     && cd /home/bbs/pttbbs 
 COPY file/pttbbs_conf /home/bbs/pttbbs/pttbbs.conf
 RUN cd /home/bbs/pttbbs && bmake all install clean
