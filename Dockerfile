@@ -22,16 +22,16 @@ RUN apt update \
 
 USER bbs
 ENV HOME=/home/bbs
-ARG GITVER=36d8d9a4d244edf5cb3d36696ef58ed764b5450c
+ARG GITVER=993daabfea9a0428672b0606c5d52e34bfe27c51
 
 RUN cd /home/bbs \
-    && sh -c "curl -L https://github.com/ptt/pttbbs/archive/$GITVER.tar.gz | tar -zxv" \
-    && mv pttbbs-$GITVER pttbbs \
-    && cd /home/bbs/pttbbs 
+    && sh -c "curl -L https://github.com/my1938/BRsBBS/archive/$GITVER.tar.gz | tar -zxv" \
+    && mv BRsBBS-$GITVER BRsBBS \
+    && cd /home/bbs/BRsBBS 
 COPY file/pttbbs_conf /home/bbs/pttbbs/pttbbs.conf
-RUN cd /home/bbs/pttbbs && bmake all install clean
+RUN cd /home/bbs/BRsBBS && bmake all install clean
 
-RUN cd /home/bbs/pttbbs/sample \
+RUN cd /home/bbs/BRsBBS/sample \
     && bmake install \
     && /home/bbs/bin/initbbs -DoIt
 
