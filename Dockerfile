@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 MAINTAINER holishing
 
 RUN groupadd --gid 99 bbs \
