@@ -1,12 +1,12 @@
 /* 定義 BBS 站名位址 */
-#define BBSNAME         "大兔的神密世界"		/* 中文站名 */
-#define BBSENAME        "BigBunny's World"	/* 英文站名 */
-#define MYHOSTNAME      "BunnyBBS.tk"		/* 網路位址 */
-#define MYIP            "114.33.186.187"	/* IP位址 */
+#define BBSNAME         "大兔世界 Docker"	/* 中文站名 */
+#define BBSENAME        "BigBunny's World Docker" /* 英文站名 */
+#define MYHOSTNAME      "BunnyBBS.docker.test"	/* 網路位址 */
+#define MYIP            "0.0.0.0"	        /* IP位址 */
 
 /* 定義是否查詢文章的 web 版 URL，及 URL 用的 hostname/prefix */
-#define QUERY_ARTICLE_URL									/* 是否提供查詢文章 URL */
-#define URL_PREFIX      "https://www.bunnybbs.tk/article"	/* URL prefix */
+//#define QUERY_ARTICLE_URL									/* 是否提供查詢文章 URL */
+//#define URL_PREFIX      "https://www.bunnybbs.tk/article"	/* URL prefix */
         /*
                          http://www.ptt.cc/bbs/SYSOP/M.1197864962.A.476.html
                          ^^^^^^^^^^^^^^^^^^^^^
@@ -311,10 +311,10 @@
 #define USE_PFTERM
 
 /* 停止新帳號被申請 */
-// #define NO_LOGINASNEW
+//#define NO_LOGINASNEW
 
 /* 除錯模式 */
-// #define DEBUG
+//#define DEBUG
 
 /* 安裝新版資源回收桶與編輯記錄 */
 #define USE_TIME_CAPSULE
@@ -330,3 +330,12 @@
 
 /* 寄信給站長 */
 #define USE_MAIL_ACCOUNT_SYSOP
+
+/* 個人成就勳章 */
+#define USE_ACHIEVE
+
+/* 看板稅 */
+#define USE_BOARDTAX
+
+/* 測試標記 */
+#define BETA
