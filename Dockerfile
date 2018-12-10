@@ -28,7 +28,7 @@ RUN cd /home/bbs \
     && sh -c "curl -L https://github.com/my1938/BRsBBS/archive/$GITVER.tar.gz | tar -zxv" \
     && mv BRsBBS-$GITVER BRsBBS \
     && cd /home/bbs/BRsBBS 
-COPY file/pttbbs_conf /home/bbs/pttbbs/pttbbs.conf
+COPY file/pttbbs_conf /home/bbs/BRsBBS/pttbbs.conf
 RUN cd /home/bbs/BRsBBS && bmake all install clean
 
 RUN cd /home/bbs/BRsBBS/sample \

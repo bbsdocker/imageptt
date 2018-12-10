@@ -1,14 +1,12 @@
-/* $Id: pttbbs.conf,v 1.14 2003/07/06 03:41:08 in2 Exp $ */
-
 /* 定義 BBS 站名位址 */
-#define BBSNAME         "批踢踢 docker"			/* 中文站名 */
-#define BBSENAME        "DTT"				/* 英文站名 */
-#define MYHOSTNAME      "pttdocker.test"       		/* 網路位址 */
-#define MYIP            "256.256.256.256"		/* IP位址 */
+#define BBSNAME         "大兔的神密世界"		/* 中文站名 */
+#define BBSENAME        "BigBunny's World"	/* 英文站名 */
+#define MYHOSTNAME      "BunnyBBS.tk"		/* 網路位址 */
+#define MYIP            "114.33.186.187"	/* IP位址 */
 
 /* 定義是否查詢文章的 web 版 URL，及 URL 用的 hostname/prefix */
-//#define QUERY_ARTICLE_URL                   /* 是否提供查詢文章 URL */
-//#define URL_PREFIX      "http://www.ptt.cc/bbs"        /* URL prefix */
+#define QUERY_ARTICLE_URL									/* 是否提供查詢文章 URL */
+#define URL_PREFIX      "https://www.bunnybbs.tk/article"	/* URL prefix */
         /*
                          http://www.ptt.cc/bbs/SYSOP/M.1197864962.A.476.html
                          ^^^^^^^^^^^^^^^^^^^^^
@@ -21,10 +19,10 @@
 #define MAX_USERS	(100)
 
 /* 最多同時上線人數, 每個人會用掉 3456 bytes 的 shared-memory */
-#define MAX_ACTIVE	(31)
+#define MAX_ACTIVE	(10)
 
 /* 最大開板個數, 每個會用掉 6420 bytes 的 shared-memory */
-#define	MAX_BOARD	(1024)
+#define	MAX_BOARD	(128)
 
 /* 最大 CPU負荷, 超過的時候將拒絕 login */
 #define MAX_CPULOAD	(300)
@@ -37,48 +35,69 @@
  * BBSMNAME2 則是出現在部份選單裡，建議盡量照原格式 4 字元寬
  * MONEYNAME 是錢幣的名字，建議五個字元內
  */
-#define BBSMNAME	"Dtt"
-#define BBSMNAME2	"dPtt"
-#define MONEYNAME	"Dtt幣"
+#define BBSMNAME	"BBS"
+#define BBSMNAME2	"大兔"
+#define MONEYNAME	"兔幣"
 
 /* 定義系統資訊 */
-#define BBSUSER         "bbs"
-#define BBSUID          9999
-#define BBSGID          99
+#define BBSUSER		"bbs"
+#define BBSUID		9999
+#define BBSGID		99
+#define BBSHOME		"/home/bbs"
 
 /* *** 以下為預設板名 (見 include/config.h) *** */
 /* 安全紀錄 */
-#define BN_SECURITY     "Security"
+#define BN_SECURITY		"BNY_Security"
+
 /* 動態看板的家 */
-#define BN_NOTE         "Note"
+#define BN_NOTE			"ENG_EnvAdmin"
+
 /* 紀錄 */
-#define BN_RECORD       "Record"
+#define BN_RECORD		"Record"
+
+/* 帳號審核紀錄 */
+#define BN_ID_RECORD	"IDs_Record"
+
+/* 金融監管紀錄 */
+#define BN_FINANC		"INT_FinanSup"
 
 /* SYSOP 板 */
-#define BN_SYSOP        "SYSOP"
+#define BN_SYSOP		"BNY_SYSOP"
+
 /* 測試板 */
-#define BN_TEST	    "Test"
+#define BN_TEST			"Test"
+
 /* 發生錯誤時建議的回報板名為此板 */
-#define BN_BUGREPORT    BBSMNAME "Bug"
+#define BN_BUGREPORT    "ENG_Bug"
+
 /* 法律訴訟的板 */
-#define BN_LAW	    BBSMNAME "Law"
-/* 新手板(會自動進我的最愛) */
-#define BN_NEWBIE	    BBSMNAME "NewHand"
-/* 找看板(會自動進我的最愛) */
-#define BN_ASKBOARD	    "AskBoard"
+#define BN_LAW			"JUD_Court"
+
+/* 罰單紀錄的板 */
+#define BN_POLICELOG	"JUD_Violate"
+
+/* 新手板 */
+//#define BN_NEWBIE		BBSMNAME "NewHand"
+
+/* 找看板 */
+//#define BN_ASKBOARD	"AskBoard"
+
 /* 外國板 */
-#define BN_FOREIGN	    BBSMNAME "Foreign"
+//#define BN_FOREIGN	BBSMNAME "Foreign"
 
 /* *** 以下為定義時會多出功能的板名 *** */
 
 /* 若定義, 提供美工特別用板 */
-#define BN_ARTDSN	    "Artdsn"
+//#define BN_ARTDSN		"Artdsn"
 
 /* 若定義，該板發文不受行限或是可上傳 */
-#define BN_BBSMOVIE	    "BBSmovie"
+//#define BN_BBSMOVIE	"BBSmovie"
+
+/* 若定義, 則以此為版名提供全站文摘 */
+//#define BN_DIGEST		BBSMNAME "Digest"
 
 // /* 若定義，則.... */
-// #define BN_WHOAMI "WhoAmI"
+//#define BN_WHOAMI		"WhoAmI"
 
 /* 若定義, 則全站所有五子棋/象棋棋譜都會紀錄在此板 */
 //#define BN_FIVECHESS_LOG BBSMNAME "Five"
@@ -104,7 +123,7 @@
 #define	RELAY_SERVER_IP	"127.0.0.1"
 
 /* 抬頭色彩 */
-#define TITLE_COLOR "\033[0;1;37;46m"
+#define TITLE_COLOR "\033[0;1;37;42m"
 
 /* 若定義, 則所有編輯文章最下方都會加入編輯來源.
    否則只有 SYSOP板會加入來源                    */
@@ -125,7 +144,7 @@
 #define OUTJOBSPOOL
 
 /* 若定義, 則不能舉辦賭盤 */
-#define NO_GAMBLE
+//#define NO_GAMBLE
 
 /* 可動態透過 GLOBALVAR[9]調整使用者上限 */
 #define	DYMAX_ACTIVE
@@ -170,7 +189,7 @@
 //#define COLORDATE
 
 /* 若定義, 在使用者註冊之前, 會先顯示出該檔案, 經使用者確認後才能註冊 */
-//#define HAVE_USERAGREEMENT "etc/UserAgreement"
+#define HAVE_USERAGREEMENT "etc/UserAgreement"
 //#define HAVE_USERAGREEMENT_VERSION "etc/UserAgreementVersion"
 //#define HAVE_USERAGREEMENT_ACCEPTABLE "etc/UserAgreementAcceptable"
 
@@ -202,7 +221,7 @@
 /* 若定義, 則在刪除看板文章的時候, 僅會在 .DIR 中標明, 並不會將該資料
    從 .DIR 中拿掉. 可以避免多項問題 (尤其是熱門看板一堆推薦及編輯時)
    須配合使用 (尚未完成)                                              */
-//#define SAFE_ARTICLE_DELETE
+#define SAFE_ARTICLE_DELETE
 
 /* 若定義, 則在傳送水球的時候, 不會直接 kill 該程序. 理論上可以減少大
    量的系統負和                                                       */
@@ -216,12 +235,12 @@
    在第一次啟動時, 您並不能定義 (否則就拿不到站長權了) .
    而在設定完成後, 若您站長帳號並不叫做 SYSOP,
    則可透過 NO_SYSOP_ACCOUNT 關閉該帳號, 以避免安全問題發生.          */
-//#define NO_SYSOP_ACCOUNT
+// #define NO_SYSOP_ACCOUNT
 
 /* 若定義, 則熱門看板列表會改用 shmctl utmpsortd 來計算, 而不是每
    個使用者自己算. 在站上會同時有很多人同時跑去看熱門看板的時候用.
    若站上並不會一瞬間很多人跑去看熱門看板, 會得到反效果.              */
-//#define HOTBOARDCACHE 128
+#define HOTBOARDCACHE 128
 
 /* 在轉信時附上的時區. 若在台灣, 中國大陸等地, 用預設的即可.          */
 //#define INNTIMEZONE "+0800 (CST)"
@@ -233,7 +252,7 @@
 #define OLDRECOMMEND
 
 /* 若定義, 則 guest 可推文，格式變為 IP+日期 */
-#define GUESTRECOMMEND
+//#define GUESTRECOMMEND
 
 /* 定義幾秒內算快速推文 */
 #define FASTRECMD_LIMIT (90)
@@ -254,10 +273,10 @@
 //#define NOFLOODING
 
 /* 使用 daemon/fromd, 使用外部daemon紀錄上站故鄉名稱 */
-//#define FROMD
+#define FROMD
 
 /* 若定義, 則不允許註冊 guest */
-//#define NO_GUEST_ACCOUNT_REG
+#define NO_GUEST_ACCOUNT_REG
 
 /* 若定義為 1, 則每篇發文會寫到 log/post , 可以給分析或張爸魔一類的程式用 */
 #define LOG_CONF_POST   (1)
@@ -266,9 +285,6 @@
 #define EMAILDB_LIMIT 5
 
 //#define USE_REG_CAPTCHA
-//#define USE_POST_CAPTCHA_FOR_NOREG
-//#define USE_VOTE_CAPTCHA
-//#define USE_REMOTE_CAPTCHA
 //#define CAPTCHA_INSERT_SERVER_ADDR "127.0.0.1:80"
 //#define CAPTCHA_INSERT_HOST CAPTCHA_INSERT_SERVER_ADDR
 //#define CAPTCHA_INSERT_URI "/captcha/insert"
@@ -278,4 +294,38 @@
 
 /* 前進站畫面 */
 #define INSCREEN \
-"Welcome test PttBBS on docker image! Connecting..."
+"\r\n      / |_ _/ \\           / / \r\n     |         | _ _ _ _ / / \r\n   __|_ @   @ _|_           \\ \r\n     _\\_ /\\  _/_            | \r\n        -- --               | \r\n          /  _ |  _ _ _ \\   \\ \r\n        /  /   | |        \\ | \r\n      /_ /     /_/        /_/ \r\n\r\nmeow~ welcome to bunnybbs's server~\r\n"
+
+/* 開啟退文 */
+#define ASSESS
+
+/* 留下交易記錄 */
+#define USE_RECENTPAY
+
+/* ALLPOST行為修正到最新版本 */
+//#define USE_LIVE_ALLPOST
+/*大兔：關掉此定義，因為ALLPOST不存在於大兔*/
+
+/* 修正游標的位置無法顯示任何文字的情況 */
+#define USE_PFTERM
+
+/* 停止新帳號被申請 */
+// #define NO_LOGINASNEW
+
+/* 除錯模式 */
+// #define DEBUG
+
+/* 安裝新版資源回收桶與編輯記錄 */
+#define USE_TIME_CAPSULE
+
+/* 文章最高價格 */
+#define MAX_POST_MONEY (1000)
+
+/* 新版水桶功能 */
+#define USE_NEW_BAN_SYSTEM
+
+/* 系統更新紀錄 */
+#define HAVE_SYSUPDATES
+
+/* 寄信給站長 */
+#define USE_MAIL_ACCOUNT_SYSOP
