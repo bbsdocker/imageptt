@@ -51,6 +51,7 @@
 
 /* 動態看板的家 */
 #define BN_NOTE			"ENG_EnvAdmin"
+#define BN_NOTE_Alphabet        "E"
 
 /* 紀錄 */
 #define BN_RECORD		"Record"
