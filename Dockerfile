@@ -22,10 +22,10 @@ RUN apt update \
 
 USER bbs
 ENV HOME=/home/bbs
-ARG GITVER=36d8d9a4d244edf5cb3d36696ef58ed764b5450c
+ARG GITVER=13097124789f098c440493ba3d368e43fd64569b
 
 RUN cd /home/bbs \
-    && sh -c "curl -L https://github.com/ptt/pttbbs/archive/$GITVER.tar.gz | tar -zxv" \
+    && sh -c "curl -L https://github.com/holishing/pttbbs/archive/$GITVER.tar.gz | tar -zxv" \
     && mv pttbbs-$GITVER pttbbs \
     && cd /home/bbs/pttbbs 
 COPY file/pttbbs_conf /home/bbs/pttbbs/pttbbs.conf
