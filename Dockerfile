@@ -22,8 +22,7 @@ RUN apt update \
 
 USER bbs
 ENV HOME=/home/bbs
-ARG GITVER=82f20a609e963e859d21605f2b239c9c09d1df73
-
+ARG GITVER=c1ad910e6e482b28f507824a106b38dab29f7083
 RUN cd /home/bbs \
     && sh -c "curl -L https://github.com/ptt/pttbbs/archive/$GITVER.tar.gz | tar -zxv" \
     && mv pttbbs-$GITVER pttbbs \
