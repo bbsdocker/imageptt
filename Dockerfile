@@ -8,8 +8,8 @@ RUN groupadd --gid 99 bbs \
     && rm /etc/localtime \
     && ln -s /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 
-RUN apt update \
-    && apt upgrade -y \
+RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         bmake \
         ccache \
