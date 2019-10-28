@@ -12,17 +12,18 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         bmake \
-        ccache \
-        clang \
+        gcc \
         curl \
         ca-certificates \
         libevent-dev \
         pkg-config \
         python
+#        ccache \
+#        clang \
 
 USER bbs
 ENV HOME=/home/bbs
-ARG GITVER=c1ad910e6e482b28f507824a106b38dab29f7083
+ARG GITVER=de63cdf1cff06b317a1e3597423c1dd8a3279fc6
 RUN cd /home/bbs \
     && sh -c "curl -L https://github.com/ptt/pttbbs/archive/$GITVER.tar.gz | tar -zxv" \
     && mv pttbbs-$GITVER pttbbs \
