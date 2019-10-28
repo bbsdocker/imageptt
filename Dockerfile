@@ -13,6 +13,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         bmake \
         gcc \
+        libc6-dev \
         curl \
         ca-certificates \
         libevent-dev \
