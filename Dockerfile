@@ -13,6 +13,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         bmake \
         gcc \
+        g++ \
         libc6-dev \
         curl \
         ca-certificates \
