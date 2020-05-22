@@ -2,6 +2,8 @@ FROM debian:buster
 MAINTAINER holishing
 COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
+COPY nginx_conf_ws /tmp/nginx.conf
+COPY webpack_config_js /tmp/webpack.config.js
 
 RUN groupadd --gid 99 bbs \
     && useradd -g bbs -s /bin/bash --uid 9999 bbs \
@@ -24,14 +26,22 @@ RUN groupadd --gid 99 bbs \
         git \
         ccache \
         clang \
-        wget \
         gnupg \
         lsb-release \
         sudo \
-    && ( wget -O - https://openresty.org/package/pubkey.gpg | apt-key add - ) \
+    && ( curl -sS https://openresty.org/package/pubkey.gpg | apt-key add - ) \
+    && ( curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - ) \
     && ( echo "deb http://openresty.org/package/debian $(lsb_release -sc) openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends openresty
+    && ( echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list ) \
+    && ( curl -sL https://deb.nodesource.com/setup_12.x | bash - ) \
+    && apt-get -y install --no-install-recommends openresty yarn nodejs \
+    && cp /tmp/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf \
+    && cd /usr/local/openresty/nginx/html/ \
+    && git clone https://github.com/robertabcd/PttChrome.git /usr/local/openresty/nginx/html/PttChrome \
+    && cp /tmp/webpack.config.js /usr/local/openresty/nginx/html/PttChrome/webpack.config.js \
+    && cd /usr/local/openresty/nginx/html/PttChrome \
+    && yarn && yarn build \
+    && cp -r /usr/local/openresty/nginx/html/PttChrome/dist/* /usr/local/openresty/nginx/html
 
 USER bbs
 ENV HOME=/home/bbs
@@ -46,10 +56,9 @@ RUN cd /home/bbs \
     && /home/bbs/bin/initbbs -DoIt \
     && cp /tmp/bindports.conf /home/bbs/etc/bindports.conf \
     && cp -r /home/bbs/pttbbs/daemon/wsproxy /home/bbs/wsproxy \
-    && git clone https://github.com/toxicfrog/vstruct.git /home/bbs/wsproxy/lib
-
+    && git clone https://github.com/toxicfrog/vstruct.git /home/bbs/wsproxy/lib/vstruct
 
 USER root
 CMD ["sh","-c","sudo -iu bbs /home/bbs/bin/shmctl init && sudo -iu bbs /home/bbs/bin/logind && /usr/bin/openresty -g 'daemon off;'"]
 EXPOSE 8888
-EXPOSE 80
+EXPOSE 48763
