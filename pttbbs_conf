@@ -125,7 +125,7 @@
 #define OUTJOBSPOOL
 
 /* 若定義, 則不能舉辦賭盤 */
-#define NO_GAMBLE
+//#define NO_GAMBLE
 
 /* 可動態透過 GLOBALVAR[9]調整使用者上限 */
 #define	DYMAX_ACTIVE
@@ -230,7 +230,7 @@
 //#define PLAY_ANGEL
 
 /* 若定義, 則使用舊式推文 */
-#define OLDRECOMMEND
+//#define OLDRECOMMEND
 
 /* 若定義, 則 guest 可推文，格式變為 IP+日期 */
 #define GUESTRECOMMEND
@@ -279,3 +279,27 @@
 /* 前進站畫面 */
 #define INSCREEN \
 "Welcome test PttBBS on docker image! Connecting..."
+
+#define STR_SAFEDEL_TITLE    "(本文已被刪除)"
+/* 這樣被刪文章的標題才會顯示 (本文已被刪除) */
+#define FN_SAFEDEL    ".d"
+#define FN_SAFEDEL_PREFIX_LEN (2)
+#define SAFE_ARTICLE_DELETE_NUSER (0)
+
+#define ASSESS
+#define USE_RECENTPAY
+#define USE_MAIL_ACCOUNT_SYSOP
+#define USE_LIVE_ALLPOST
+#define USE_PFTERM
+#define USE_TIME_CAPSULE
+#define MAX_POST_MONEY (1000)
+#define USE_NEW_BAN_SYSTEM
+
+#define PLAY_ANGEL
+#define ANGEL_CHANGE_TIMELIMIT_MINS 1
+#define MAX_ADBANNER (500)
+
+#define BN_ID_RECORD "ID_Record"
+#define FN_ID_RECORD "log/idrecord.log"
+
+#define CHAT_MSG_LOGFILE "log/chat.log"
