@@ -11,15 +11,19 @@ env
 git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
 cp /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
-bmake all install clean
+bmake all install
 
 ## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
-bmake all install clean
+bmake all install
 
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
 bmake install
+
+## Clear object near source code
+cd ${BBSHOME}/pttbbs
+bmake clean
 
 ## Startup basic BBS Structure
 ${BBSHOME}/bin/initbbs -DoIt
