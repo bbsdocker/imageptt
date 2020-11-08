@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM bbsdocker/debian_flatc:latest
 MAINTAINER holishing
 COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
@@ -6,14 +6,12 @@ COPY nginx_conf_ws /tmp/nginx.conf
 COPY webpack_config_js /tmp/webpack.config.js
 
 RUN groupadd --gid 99 bbs \
-    && useradd -g bbs -s /bin/bash --uid 9999 bbs \
-    && mkdir /home/bbs \
-    && chown -R bbs:bbs /home/bbs \
+    && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
-    && ln -s /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
+    && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
     && apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
+    && apt-get -t buster-backports upgrade -y \
+    && apt-get -t buster-backports install -y --no-install-recommends \
         bmake \
         gcc \
         g++ \
