@@ -31,6 +31,7 @@ RUN groupadd --gid 99 bbs \
         sudo \
     && ( curl -sS https://openresty.org/package/pubkey.gpg | apt-key add - ) \
     && ( echo "deb http://openresty.org/package/debian $(lsb_release -sc) openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
+    && apt-get update \
     && apt-get -y install --no-install-recommends openresty \
     && cp /tmp/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf \
     && sudo -iu bbs sh /tmp/build_ptt.sh \
