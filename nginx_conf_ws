@@ -41,6 +41,7 @@ http {
         "~^http?://0\.0\.0\.0" 1;
         "~^http?://127\.0\.0\.1" 1;
         "~^http?://172\.17\." 1;
+        "https://bbsdocker.github.io" 1;
         #"~^http?://192\." 1;
         #"~^http?://10\." 1;
         default 0;
