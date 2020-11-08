@@ -19,7 +19,7 @@ RUN groupadd --gid 99 bbs \
         libc6-dev \
         curl \
         ca-certificates \
-        libevent \
+        libevent-2.1 \
         libevent-dev \
         pkg-config \
         python \
