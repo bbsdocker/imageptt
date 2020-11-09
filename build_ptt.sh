@@ -8,8 +8,9 @@ export BBSHOME=${HOME}
 env
 
 ## clone current repo, build and install it
-git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
+git clone https://github.com/holishing/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
+git checkout r2/letflatcoptional
 cp /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
 bmake all install
 

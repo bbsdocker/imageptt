@@ -2,9 +2,7 @@ name: push container
 
 on:
   push:
-    branches: master
-  schedule:
-    - cron: "30 0 * * 2"
+    branches: r2/letflatcoptional
 
 jobs:
   main:
@@ -28,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: bbsdocker/imageptt:latest
+          tags: bbsdocker/imageptt:remove_flatc
             #build-args: |
             #  arg1=value1
             #  arg2=value2
