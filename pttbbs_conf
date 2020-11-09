@@ -303,3 +303,7 @@
 #define FN_ID_RECORD "log/idrecord.log"
 
 #define CHAT_MSG_LOGFILE "log/chat.log"
+
+#define USE_MBBSD_CXX
+#define USE_EMAILDB
+#define USE_VERIFYDB
