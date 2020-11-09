@@ -3,7 +3,6 @@ MAINTAINER holishing
 COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
 COPY nginx_conf_ws /tmp/nginx.conf
-COPY webpack_config_js /tmp/webpack.config.js
 COPY build_ptt.sh /tmp/build_ptt.sh
 
 RUN groupadd --gid 99 bbs \
