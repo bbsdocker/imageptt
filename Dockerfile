@@ -1,4 +1,4 @@
-FROM bbsdocker/debian_flatc:latest
+FROM debian:buster
 MAINTAINER holishing
 COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
@@ -9,7 +9,10 @@ RUN groupadd --gid 99 bbs \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
     && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
+    && ( echo 'deb http://deb.debian.org/debian buster-backports main' | tee -a /etc/apt/sources.list ) \
+    && cat /etc/apt/sources.list \
     && apt-get update \
+    && apt-get upgrade -y \
     && apt-get -t buster-backports upgrade -y \
     && apt-get -t buster-backports install -y --no-install-recommends \
         bmake \
