@@ -1,7 +1,6 @@
 #!/bin/sh
 
 export BBSHOME=${HOME}
-if [ "${DEBIAN_VERSION}" = "bullseye" ]; then alias bmake="bmake -m /usr/share/bmake/mk-netbsd/" ; fi
 
 # check environment
 env
@@ -13,19 +12,19 @@ git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
 cp /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
 git apply /tmp/multipledef.patch
-bmake all install
+pmake all install
 
 ## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
-bmake all install
+pmake all install
 
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
-bmake install
+pmake install
 
 ## Clear object near source code
 cd ${BBSHOME}/pttbbs
-bmake clean
+pmake clean
 
 ## Startup basic BBS Structure
 ${BBSHOME}/bin/initbbs -DoIt
