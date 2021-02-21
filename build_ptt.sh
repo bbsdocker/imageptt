@@ -33,4 +33,3 @@ ${BBSHOME}/bin/initbbs -DoIt
 ## install configurations of telnet/websocket connection service
 cp /tmp/bindports.conf ${BBSHOME}/etc/bindports.conf
 cp -r ${BBSHOME}/pttbbs/daemon/wsproxy ${BBSHOME}/wsproxy
-git clone https://github.com/toxicfrog/vstruct.git ${BBSHOME}/wsproxy/lib/vstruct
