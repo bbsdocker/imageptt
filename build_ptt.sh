@@ -21,6 +21,7 @@ pmake all install
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
 pmake install
+cp etc/reg.methods ${BBSHOME}/etc/
 
 ## Clear object near source code
 cd ${BBSHOME}/pttbbs
