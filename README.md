@@ -1,4 +1,4 @@
-# imageptt
+# imageptt - Docker Image Build for PttBBS
 
 Weekly Docker Image Builds for PttBBS(批踢踢實業坊)
 
