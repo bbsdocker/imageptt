@@ -18,9 +18,8 @@ RUN set -x \
     && cat /etc/apt/sources.list \
     && apt-get update \
     && apt-get upgrade -y \
-    && ( if [ "${DEBIAN_VERSION}" != "bullseye" ]; then BACKPORTS_FIRST="-t ${DEBIAN_VERSION}-backports";fi ) \
-    && apt-get ${BACKPORTS_FIRST} upgrade -y \
-    && apt-get ${BACKPORTS_FIRST} install -y --no-install-recommends \
+    && apt-get -t "${DEBIAN_VERSION}-backports" upgrade -y \
+    && apt-get -t "${DEBIAN_VERSION}-backports" install -y --no-install-recommends \
         bmake \
         gcc \
         g++ \
@@ -36,10 +35,16 @@ RUN set -x \
         clang \
         gnupg \
         sudo \
-    && ( curl -L https://openresty.org/package/pubkey.gpg | gpg --dearmor > /usr/share/keyrings/openresty-archive-keyring.gpg  )\
-    && OPENRESTY_DEBIAN_VERSION=buster \
-    && ( if [ "${DEBIAN_VERSION}" != "bullseye" ]; then OPENRESTY_DEBIAN_VERSION=${DEBIAN_VERSION};fi ) \
-    && ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian ${OPENRESTY_DEBIAN_VERSION} openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
+    && ( if [ "${DEBIAN_VERSION}" != "bullseye" ]; \
+         then ( curl -L https://openresty.org/package/pubkey.gpg | \
+                gpg --dearmor -o /usr/share/keyrings/openresty-archive-keyring.gpg  ); \
+         else ( curl -fsSL https://www.clam.ml/gpg-pubkey/sean.gpg | \
+                gpg --dearmor -o /usr/share/keyrings/sean-test-keyring.gpg ); \
+         fi ) \
+    && ( if [ "${DEBIAN_VERSION}" != "bullseye" ]; \
+         then ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian ${DEBIAN_VERSION} openresty" | tee /etc/apt/sources.list.d/openresty.list ) ; \
+         else ( echo "deb [signed-by=/usr/share/keyrings/sean-test-keyring.gpg] https://gh.pkg.clam.ml/${DEBIAN_VERSION} ./" | tee /etc/apt/sources.list.d/openresty.list ) ; \
+         fi ) \
     && apt-get update \
     && apt-get -y install --no-install-recommends openresty \
     && cp /tmp/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf \
