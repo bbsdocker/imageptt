@@ -14,12 +14,11 @@ RUN set -x \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
     && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
-    && ( echo "deb http://deb.debian.org/debian ${DEBIAN_VERSION}-backports main" | tee -a /etc/apt/sources.list ) \
     && cat /etc/apt/sources.list \
     && apt-get update \
     && apt-get upgrade -y \
-    && apt-get -t "${DEBIAN_VERSION}-backports" upgrade -y \
-    && apt-get -t "${DEBIAN_VERSION}-backports" install -y --no-install-recommends \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
         bmake \
         gcc \
         g++ \
