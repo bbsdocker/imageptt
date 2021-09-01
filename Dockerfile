@@ -34,21 +34,13 @@ RUN set -x \
         clang \
         gnupg \
         sudo \
-    && ( if [ "${DEBIAN_VERSION}" != "bullseye" ]; \
-         then ( curl -L https://openresty.org/package/pubkey.gpg | \
-                gpg --dearmor -o /usr/share/keyrings/openresty-archive-keyring.gpg  ); \
-         else ( curl -fsSL https://www.clam.ml/gpg-pubkey/sean.gpg | \
-                gpg --dearmor -o /usr/share/keyrings/sean-test-keyring.gpg ); \
-         fi ) \
-    && ( if [ "${DEBIAN_VERSION}" != "bullseye" ]; \
-         then ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian ${DEBIAN_VERSION} openresty" | tee /etc/apt/sources.list.d/openresty.list ) ; \
-         else ( echo "deb [signed-by=/usr/share/keyrings/sean-test-keyring.gpg] https://gh.pkg.clam.ml/${DEBIAN_VERSION} ./" | tee /etc/apt/sources.list.d/openresty.list ) ; \
-         fi ) \
+    && ( curl -L https://openresty.org/package/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/openresty-archive-keyring.gpg ) \
+    && ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian ${DEBIAN_VERSION} openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
     && apt-get update \
     && apt-get -y install --no-install-recommends openresty \
     && cp /tmp/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf \
-    && sudo -iu bbs env DEBIAN_VERSION=${DEBIAN_VERSION} sh /tmp/build_ptt.sh \
-    && apt-get remove -y bmake gcc g++ libc6-dev libevent-dev pkg-config gnupg \
+    && sudo -iu bbs sh /tmp/build_ptt.sh \
+    && apt-get remove -y bmake gcc g++ clang ccache libc6-dev libevent-dev pkg-config gnupg \
     && apt-get autoremove -y
 
 USER root
