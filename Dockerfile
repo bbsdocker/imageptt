@@ -34,6 +34,8 @@ RUN set -x \
         clang \
         gnupg \
         sudo \
+        libaio-all-perl \
+        libemail-sender-perl \
     && ( curl -L https://openresty.org/package/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/openresty-archive-keyring.gpg ) \
     && ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian ${DEBIAN_VERSION} openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
     && apt-get update \
