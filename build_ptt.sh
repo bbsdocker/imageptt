@@ -11,7 +11,6 @@ set -eux
 git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
 cp /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
-git apply /tmp/multipledef.patch
 pmake all install
 
 ## install logind for enabling websocket feature
