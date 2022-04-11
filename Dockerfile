@@ -5,7 +5,6 @@ COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
 COPY nginx_conf_ws /tmp/nginx.conf
 COPY build_ptt.sh /tmp/build_ptt.sh
-COPY multipledef.patch /tmp/multipledef.patch
 
 ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION $MY_DEBIAN_VERSION
