@@ -27,7 +27,8 @@ RUN set -x \
         libevent-2.1 \
         libevent-dev \
         pkg-config \
-        python2 \
+        python3 \
+        python-is-python3 \
         git \
         ccache \
         clang \
