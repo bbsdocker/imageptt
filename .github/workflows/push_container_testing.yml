@@ -4,7 +4,7 @@ on:
   push:
     branches: master
   schedule:
-    - cron: "30 16 * * 0/4"
+    - cron: "30 16 * * 0,4"
 
 jobs:
   main:
@@ -33,9 +33,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: bbsdocker/imageptt:bullseye,bbsdocker/imageptt:bullseye-latest,bbsdocker/imageptt:bullseye-${{ steps.date.outputs.date }}
+          tags: bbsdocker/imageptt:bookworm,bbsdocker/imageptt:bookworm-latest,bbsdocker/imageptt:bookworm-${{ steps.date.outputs.date }}
           build-args: |
-            MY_DEBIAN_VERSION=bullseye
+            MY_DEBIAN_VERSION=bookworm
 
       -
         name: Image digest
