@@ -4,6 +4,7 @@ MAINTAINER holishing
 COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
 COPY nginx_conf_ws /tmp/nginx.conf
+COPY initbbs_c /tmp/initbbs.c
 COPY build_ptt.sh /tmp/build_ptt.sh
 
 ARG MY_DEBIAN_VERSION

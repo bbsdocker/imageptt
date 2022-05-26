@@ -10,7 +10,8 @@ set -eux
 ## clone current repo, build and install it
 git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
-cp /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
+cp -v /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
+cp -v /tmp/initbbs.c ${BBSHOME}/pttbbs/util/initbbs.c
 pmake all install
 
 ## install logind for enabling websocket feature
@@ -20,7 +21,7 @@ pmake all install
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
 pmake install
-cp etc/reg.methods ${BBSHOME}/etc/
+cp -v etc/reg.methods ${BBSHOME}/etc/
 
 ## Clear object near source code
 cd ${BBSHOME}/pttbbs
@@ -30,5 +31,5 @@ pmake clean
 ${BBSHOME}/bin/initbbs -DoIt
 
 ## install configurations of telnet/websocket connection service
-cp /tmp/bindports.conf ${BBSHOME}/etc/bindports.conf
-cp -r ${BBSHOME}/pttbbs/daemon/wsproxy ${BBSHOME}/wsproxy
+cp -v /tmp/bindports.conf ${BBSHOME}/etc/bindports.conf
+cp -vr ${BBSHOME}/pttbbs/daemon/wsproxy ${BBSHOME}/wsproxy
