@@ -14,7 +14,7 @@ RUN set -x \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
     && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
-    && cat /etc/apt/sources.list \
+    && (if [ -f "/etc/apt/sources.list.d/debian.sources" ];then cat /etc/apt/sources.list.d/debian.sources;else cat /etc/apt/sources.list;fi) \
     && apt-get update \
     && apt-get upgrade -y \
     && apt-get upgrade -y \
