@@ -1,0 +1,33 @@
+From a78d6c26b231036533c5c32c330f64dbccc9e8c4 Mon Sep 17 00:00:00 2001
+From: r2 <holishing@ccns.ncku.edu.tw>
+Date: Thu, 16 Feb 2023 00:01:30 +0800
+Subject: [PATCH] fix(work around): only call change_contact_email when
+ USEREC_EMAIL_IS_CONTACT is defined
+
+---
+ mbbsd/register.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/mbbsd/register.c b/mbbsd/register.c
+index 903b086c..8d0ced6a 100644
+--- a/mbbsd/register.c
++++ b/mbbsd/register.c
+@@ -1182,6 +1182,7 @@ check_register(void)
+     char fn[PATHLEN];
+     int ret = 0;
+ 
++#ifdef USEREC_EMAIL_IS_CONTACT
+     // 確認一定要有聯絡信箱
+     if (!is_valid_email(cuser.email)) {
+         more("etc/ensurevalidcontactemail", NA);
+@@ -1198,6 +1199,7 @@ check_register(void)
+         while ((ret = change_contact_email(1)));
+ #endif //FORCE_UPDATE_CONTACT_EMAIL_LASTLOGIN
+     }
++#endif //USEREC_EMAIL_IS_CONTACT
+ 
+     // 已經通過的就不用了
+     if (HasUserPerm(PERM_LOGINOK) || HasUserPerm(PERM_SYSOP))
+-- 
+2.39.2
+
