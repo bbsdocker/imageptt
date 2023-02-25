@@ -6,7 +6,7 @@ COPY bindports_conf /tmp/bindports.conf
 COPY nginx_conf_ws /tmp/nginx.conf
 COPY initbbs_c /tmp/initbbs.c
 COPY build_ptt.sh /tmp/build_ptt.sh
-COPY fix_contect_email_not_enabled.patch /tmp/fix_contect_email_not_enabled.patch
+COPY fix_contact_email_not_enabled.patch /tmp/fix_contact_email_not_enabled.patch
 
 ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION $MY_DEBIAN_VERSION
