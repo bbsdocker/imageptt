@@ -12,7 +12,6 @@ git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
 cp -v /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
 cp -v /tmp/initbbs.c ${BBSHOME}/pttbbs/util/initbbs.c
-git apply /tmp/fix_contact_email_not_enabled.patch
 pmake all install
 
 ## install logind for enabling websocket feature
