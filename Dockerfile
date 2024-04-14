@@ -38,7 +38,7 @@ RUN set -x \
         libio-all-perl \
         libemail-sender-perl \
     && ( curl -L https://openresty.org/package/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/openresty-archive-keyring.gpg ) \
-    && ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian $(echo ${DEBIAN_VERSION}|sed 's/bookworm/bullseye/g'|sed 's/sid/bullseye/g') openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
+    && ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian $(echo ${DEBIAN_VERSION}|sed 's/sid/bullseye/g') openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
     && apt-get update \
     && apt-get -y install --no-install-recommends openresty \
     && cp /tmp/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf \
