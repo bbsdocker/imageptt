@@ -19,7 +19,7 @@ RUN set -x \
     && (if [ -f "/etc/apt/sources.list.d/debian.sources" ];then cat /etc/apt/sources.list.d/debian.sources;else cat /etc/apt/sources.list;fi) \
     && apt-get update \
     && apt-get upgrade -y \
-    && apt-get upgrade -y \
+    && apt-get full-upgrade -y \
     && apt-get install -y --no-install-recommends \
         bmake \
         gcc \
