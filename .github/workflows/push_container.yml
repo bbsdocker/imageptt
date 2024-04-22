@@ -48,9 +48,9 @@ jobs:
           push: true
           tags: bbsdocker/imageptt:latest,bbsdocker/imageptt:${{ steps.date.outputs.date }}
           platforms: linux/arm64
-          build-args:
-            - MY_DEBIAN_VERSION=bullseye
-            - OPENRESTY_ARCH=arm64
+          build-args: |
+            MY_DEBIAN_VERSION=bullseye
+            OPENRESTY_ARCH=arm64
       -
         name: Image digest - arm64
         run: echo ${{ steps.docker_build_arm64.outputs.digest }}
