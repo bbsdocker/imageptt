@@ -10,7 +10,6 @@ COPY 0001-util-poststat.c-fix-implicit-argument-problem.patch /tmp/0001-util-pos
 COPY 0002-util-topusr.c-fix-implicit-argument-problem.patch /tmp/0002-util-topusr.c-fix-implicit-argument-problem.patch
 
 ARG MY_DEBIAN_VERSION
-ARG OPENRESTY_ARCH=
 
 ENV DEBIAN_VERSION $MY_DEBIAN_VERSION
 RUN set -x \
@@ -29,7 +28,7 @@ RUN set -x \
         libc6-dev \
         curl \
         ca-certificates \
-        libevent-2.1 \
+        "libevent-2.1$(if [ $DEBIAN_VERSION = sid ];then echo "-7t64";fi)" \
         libevent-dev \
         pkg-config \
         python3 \
@@ -42,7 +41,7 @@ RUN set -x \
         libio-all-perl \
         libemail-sender-perl \
     && ( curl -L https://openresty.org/package/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/openresty-archive-keyring.gpg ) \
-    && ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/${OPENRESTY_ARCH}/debian $(echo ${DEBIAN_VERSION}|sed 's/sid/bookworm/g') openresty" | tee /etc/apt/sources.list.d/openresty.list ) \
+    && ( if [ "$(dpkg --print-architecture)" = "arm64" ]; then ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/arm64/debian $(echo ${DEBIAN_VERSION}|sed 's/sid/bookworm/g') openresty" | tee /etc/apt/sources.list.d/openresty.list ); else ( echo "deb [signed-by=/usr/share/keyrings/openresty-archive-keyring.gpg] http://openresty.org/package/debian $(echo ${DEBIAN_VERSION}|sed 's/sid/bookworm/g') openresty" | tee /etc/apt/sources.list.d/openresty.list );fi ) \
     && apt-get update \
     && apt-get -y install --no-install-recommends openresty \
     && cp /tmp/nginx.conf /usr/local/openresty/nginx/conf/nginx.conf \
