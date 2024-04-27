@@ -34,6 +34,7 @@ jobs:
         with:
           push: true
           tags: bbsdocker/imageptt:sid,bbsdocker/imageptt:sid-latest,bbsdocker/imageptt:sid-${{ steps.date.outputs.date }}
+          file: ./Dockerfile_d13
           build-args: |
             MY_DEBIAN_VERSION=sid
 
@@ -47,6 +48,7 @@ jobs:
         with:
           push: true
           tags: bbsdocker/imageptt:sid,bbsdocker/imageptt:sid-latest,bbsdocker/imageptt:sid-${{ steps.date.outputs.date }}-arm64v8
+          file: ./Dockerfile_d13
           platforms: linux/arm64
           build-args: |
             MY_DEBIAN_VERSION=sid
