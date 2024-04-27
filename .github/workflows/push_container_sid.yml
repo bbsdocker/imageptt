@@ -41,16 +41,16 @@ jobs:
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
       -
-        name: Build and push - aarch64
-        id: docker_build_aarch64
+        name: Build and push - arm64v8
+        id: docker_build_arm64v8
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: bbsdocker/imageptt:sid,bbsdocker/imageptt:sid-latest,bbsdocker/imageptt:sid-${{ steps.date.outputs.date }}-aarch64
+          tags: bbsdocker/imageptt:sid,bbsdocker/imageptt:sid-latest,bbsdocker/imageptt:sid-${{ steps.date.outputs.date }}-arm64v8
           platforms: linux/arm64
           build-args: |
             MY_DEBIAN_VERSION=sid
             OPENRESTY_ARCH=arm64
       -
-        name: Image digest - aarch64
-        run: echo ${{ steps.docker_build_aarch64.outputs.digest }}
+        name: Image digest - arm64v8
+        run: echo ${{ steps.docker_build_arm64v8.outputs.digest }}
