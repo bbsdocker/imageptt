@@ -1,0 +1,26 @@
+From 5c6c0aacfe8201a17135451650446c95927d13a8 Mon Sep 17 00:00:00 2001
+From: holishing <holishing@ccns.ncku.edu.tw>
+Date: Sun, 28 Apr 2024 01:21:49 +0800
+Subject: [PATCH] util/topusr.c: fix implicit argument problem
+
+---
+ util/topusr.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/util/topusr.c b/util/topusr.c
+index 29ab496a..907e12d4 100644
+--- a/util/topusr.c
++++ b/util/topusr.c
+@@ -23,8 +23,7 @@ int num;
+ FILE *fp;
+ 
+ 
+-void
+- top(type)
++void top(int type)
+ {
+     static char *str_type[TYPE_COUNT] =
+     {"發表次數", " 大富翁 "};
+-- 
+2.44.0
+

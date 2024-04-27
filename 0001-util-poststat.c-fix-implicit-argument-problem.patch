@@ -1,0 +1,37 @@
+From 961881eb9cd69a727bebd99c912bd86b6e689e55 Mon Sep 17 00:00:00 2001
+From: holishing <holishing@ccns.ncku.edu.tw>
+Date: Sun, 28 Apr 2024 01:15:30 +0800
+Subject: [PATCH] util/poststat.c: fix implicit argument problem
+
+---
+ util/poststat.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/util/poststat.c b/util/poststat.c
+index 64443b76..9cc80d0e 100644
+--- a/util/poststat.c
++++ b/util/poststat.c
+@@ -85,9 +85,7 @@ search(t)
+ }
+ 
+ 
+-int
+-sort(pp, count)
+-    struct postrec *pp;
++int sort(struct postrec *pp, int count)
+ {
+     int i, j;
+ 
+@@ -271,8 +269,7 @@ poststat(mytype)
+ }
+ 
+ 
+-int main(argc, argv)
+-    char *argv[];
++int main(int argc, char *argv[])
+ {
+     time4_t now;
+     struct tm *ptime;
+-- 
+2.44.0
+

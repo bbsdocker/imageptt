@@ -6,6 +6,8 @@ COPY bindports_conf /tmp/bindports.conf
 COPY nginx_conf_ws /tmp/nginx.conf
 COPY initbbs_c /tmp/initbbs.c
 COPY build_ptt.sh /tmp/build_ptt.sh
+COPY 0001-util-poststat.c-fix-implicit-argument-problem.patch /tmp/0001-util-poststat.c-fix-implicit-argument-problem.patch
+COPY 0002-util-topusr.c-fix-implicit-argument-problem.patch /tmp/0002-util-topusr.c-fix-implicit-argument-problem.patch
 
 ARG MY_DEBIAN_VERSION
 ARG OPENRESTY_ARCH=
