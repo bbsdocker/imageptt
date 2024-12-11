@@ -14,6 +14,7 @@ cp -v /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
 cp -v /tmp/initbbs.c ${BBSHOME}/pttbbs/util/initbbs.c
 git apply /tmp/0001-util-poststat.c-fix-implicit-argument-problem.patch
 git apply /tmp/0002-util-topusr.c-fix-implicit-argument-problem.patch
+# use "pmake" as alias for supporting bmake using NetBSD specific Makefile rules 
 pmake all install
 
 ## install logind for enabling websocket feature
