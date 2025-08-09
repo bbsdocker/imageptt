@@ -1,4 +1,4 @@
-name: push container
+name: push container for Debian Trixie
 
 on:
   push:
@@ -38,12 +38,12 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/bbsdocker/imageptt:bookworm
-            ghcr.io/bbsdocker/imageptt:bookworm-latest
-            ghcr.io/bbsdocker/imageptt:bookworm-${{ steps.date.outputs.date }}
+            ghcr.io/bbsdocker/imageptt:trixie
+            ghcr.io/bbsdocker/imageptt:trixie-latest
+            ghcr.io/bbsdocker/imageptt:trixie-${{ steps.date.outputs.date }}
           platforms: linux/amd64, linux/arm64
           build-args: |
-            MY_DEBIAN_VERSION=bookworm
+            MY_DEBIAN_VERSION=trixie
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

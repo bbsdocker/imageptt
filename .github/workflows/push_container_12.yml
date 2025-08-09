@@ -1,10 +1,10 @@
-name: push container
+name: push container for Debian Bookworm
 
 on:
   push:
     branches: master
   schedule:
-    - cron: "30 0 * * 2,5"
+    - cron: "30 16 * * 0,4"
 
 env:
   REGISTRY: ghcr.io
@@ -39,10 +39,12 @@ jobs:
           push: true
           tags: |
             ghcr.io/bbsdocker/imageptt:latest
-            ghcr.io/bbsdocker/imageptt:${{ steps.date.outputs.date }}
+            ghcr.io/bbsdocker/imageptt:bookworm
+            ghcr.io/bbsdocker/imageptt:bookworm-latest
+            ghcr.io/bbsdocker/imageptt:bookworm-${{ steps.date.outputs.date }}
           platforms: linux/amd64, linux/arm64
           build-args: |
-            MY_DEBIAN_VERSION=bullseye
+            MY_DEBIAN_VERSION=bookworm
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
