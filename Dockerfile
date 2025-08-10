@@ -1,5 +1,5 @@
 ARG MY_DEBIAN_VERSION
-FROM quay.io/lib/debian:${MY_DEBIAN_VERSION} as pttbbs-builder
+FROM quay.io/lib/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
 
 COPY pttbbs_conf /tmp/pttbbs.conf
 COPY bindports_conf /tmp/bindports.conf
@@ -8,7 +8,8 @@ COPY build_ptt.sh /tmp/build_ptt.sh
 COPY 0001-util-poststat.c-fix-implicit-argument-problem.patch /tmp/0001-util-poststat.c-fix-implicit-argument-problem.patch
 COPY 0002-util-topusr.c-fix-implicit-argument-problem.patch /tmp/0002-util-topusr.c-fix-implicit-argument-problem.patch
 
-ENV DEBIAN_VERSION $MY_DEBIAN_VERSION
+ARG MY_DEBIAN_VERSION
+ENV DEBIAN_VERSION ${MY_DEBIAN_VERSION}
 RUN set -x \
     && groupadd --gid 99 bbs \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
@@ -32,12 +33,19 @@ RUN set -x \
 
 USER bbs
 WORKDIR /home/bbs
-RUN sh /tmp/build_ptt.sh && rm -rvf /home/bbs/.cache && rm -rvf /home/bbs/pttbbs
+RUN sh /tmp/build_ptt.sh
 
 ############ stage 2
 
-FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim
+FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim AS stage-fileselector
 COPY --from=pttbbs-builder /home/bbs /home/bbs
+RUN rm -rvf /home/bbs/pttbbs
+RUN rm -rvf /home/bbs/.cache
+
+############ stage 3
+
+FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim
+COPY --from=stage-fileselector /home/bbs /home/bbs
 
 ENV DEBIAN_VERSION $MY_DEBIAN_VERSION
 RUN set -x \
@@ -50,7 +58,6 @@ RUN set -x \
         "libevent-2.1$(if [ $DEBIAN_VERSION = trixie ];then echo "-7t64";fi)" \
     && apt-get clean \
     && rm -rvf /var/cache/apt/archives /var/lib/apt/lists/*
-
 
 USER bbs
 CMD ["sh","-c","/home/bbs/bin/shmctl init && /home/bbs/bin/logind -D"]
