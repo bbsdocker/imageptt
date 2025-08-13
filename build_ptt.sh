@@ -10,10 +10,9 @@ set -eux
 ## clone current repo, build and install it
 git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
 cd ${BBSHOME}/pttbbs
-cp -v /tmp/pttbbs.conf ${BBSHOME}/pttbbs/pttbbs.conf
-cp -v /tmp/initbbs.c ${BBSHOME}/pttbbs/util/initbbs.c
-git apply /tmp/0001-util-poststat.c-fix-implicit-argument-problem.patch
-git apply /tmp/0002-util-topusr.c-fix-implicit-argument-problem.patch
+cp -v /tmp/confs/pttbbs_conf ${BBSHOME}/pttbbs/pttbbs.conf
+cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
+git apply /tmp/patches/*.patch
 # use "pmake" as alias for supporting bmake using NetBSD specific Makefile rules 
 pmake all install
 
@@ -34,5 +33,5 @@ pmake clean
 ${BBSHOME}/bin/initbbs -DoIt
 
 ## install configurations of telnet/websocket connection service
-cp -v /tmp/bindports.conf ${BBSHOME}/etc/bindports.conf
+cp -v /tmp/confs/bindports_conf ${BBSHOME}/etc/bindports.conf
 cp -vr ${BBSHOME}/pttbbs/daemon/wsproxy ${BBSHOME}/wsproxy

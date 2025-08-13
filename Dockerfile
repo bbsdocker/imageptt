@@ -1,12 +1,9 @@
 ARG MY_DEBIAN_VERSION
 FROM quay.io/lib/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
 
-COPY pttbbs_conf /tmp/pttbbs.conf
-COPY bindports_conf /tmp/bindports.conf
-COPY initbbs_c /tmp/initbbs.c
+COPY confs /tmp/confs
+COPY patches /tmp/patches
 COPY build_ptt.sh /tmp/build_ptt.sh
-COPY 0001-util-poststat.c-fix-implicit-argument-problem.patch /tmp/0001-util-poststat.c-fix-implicit-argument-problem.patch
-COPY 0002-util-topusr.c-fix-implicit-argument-problem.patch /tmp/0002-util-topusr.c-fix-implicit-argument-problem.patch
 
 ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION ${MY_DEBIAN_VERSION}
