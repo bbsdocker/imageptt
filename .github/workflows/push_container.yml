@@ -11,30 +11,16 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  main:
+  image-build-amd64:
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         include:
           # Build AMD64 images on ubuntu-24.04
-          - runner: 'ubuntu-24.04'
-            architecture: 'linux/amd64'
-            debien_image_ver_name: 'bookworm'
-            is_latest: ''
-          - runner: 'ubuntu-24.04'
-            architecture: 'linux/amd64'
-            debien_image_ver_name: 'trixie'
-            is_latest: 'ghcr.io/bbsdocker/imageptt:latest'
-
-          # Build ARM64 images on ubuntu-24.04-arm
-          - runner: 'ubuntu-24.04-arm'
-            architecture: 'linux/arm64'
-            debien_image_ver_name: 'bookworm'
-            is_latest: ''
-          - runner: 'ubuntu-24.04-arm'
-            architecture: 'linux/arm64'
-            debien_image_ver_name: 'trixie'
-            is_latest: 'ghcr.io/bbsdocker/imageptt:latest'
-    runs-on: ${{ matrix.runner }}
+          - debien_image_ver_name: bookworm
+            debien_image_ver_number: 12
+          - debien_image_ver_name: trixie
+            debien_image_ver_number: 13
     steps:
       -
         name: Get current date
@@ -55,15 +41,77 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v6
         with:
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            ghcr.io/bbsdocker/imageptt:${{ matrix.debien_image_ver_name }}
-            ghcr.io/bbsdocker/imageptt:${{ matrix.debien_image_ver_name }}-latest
-            ghcr.io/bbsdocker/imageptt:${{ matrix.debien_image_ver_name }}-${{ steps.date.outputs.date }}
-            ${{ matrix.is_latest }}
-          platforms: ${{ matrix.architecture }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.debien_image_ver_name }}-amd64
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.debien_image_ver_name }}-amd64-${{ steps.date.outputs.date }}
+          platforms: linux/amd64
           build-args: |
             MY_DEBIAN_VERSION=${{ matrix.debien_image_ver_name }}
+            MY_DEBIAN_VERSION_NUMBER=${{ matrix.debien_image_ver_number }}
+  image-build-arm64:
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      matrix:
+        include:
+          # Build ARM64 images on ubuntu-24.04
+          - debien_image_ver_name: bookworm
+            debien_image_ver_number: 12
+          - debien_image_ver_name: trixie
+            debien_image_ver_number: 13
+    steps:
       -
-        name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+        name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v6
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.debien_image_ver_name }}-arm64
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.debien_image_ver_name }}-arm64-${{ steps.date.outputs.date }}
+          platforms: linux/amd64
+          build-args: |
+            MY_DEBIAN_VERSION=${{ matrix.debien_image_ver_name }}
+            MY_DEBIAN_VERSION_NUMBER=${{ matrix.debien_image_ver_number }}
+  create-manifest:
+    needs: [image-build-amd64, image-build-arm64]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create and Push Manifest for Debian 13
+        run: |
+          docker manifest create ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-amd64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-arm64
+          docker manifest create ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-amd64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-arm64
+          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie
+          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+      - name: Create and Push Manifest for Debian 12
+        run: |
+          docker manifest create ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm-amd64 \
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm-arm64
+          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm
