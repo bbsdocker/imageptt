@@ -33,13 +33,13 @@ jobs:
           - runner: 'ubuntu-24.04-arm'
             architecture: 'linux/arm64'
             debien_image_ver_name: 'trixie'
-            is_latest: ''
+            is_latest: 'ghcr.io/bbsdocker/imageptt:latest'
     runs-on: ${{ matrix.runner }}
     steps:
       -
         name: Get current date
         id: date
-        run: echo "{date}={$(date +'%Y%m%d')}" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
