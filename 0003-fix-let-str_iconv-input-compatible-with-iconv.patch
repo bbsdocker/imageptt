@@ -1,0 +1,39 @@
+From bfb32f58db6bb22a9b722b8b43c36767b5c744de Mon Sep 17 00:00:00 2001
+From: r2 <r2@d2.clam.moe>
+Date: Wed, 13 Aug 2025 14:41:49 +0800
+Subject: [PATCH 3/4] fix: let str_iconv input compatible with iconv
+
+---
+ common/sys/string.c | 2 +-
+ include/cmsys.h     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/common/sys/string.c b/common/sys/string.c
+index 9d6064a9..63e46d57 100644
+--- a/common/sys/string.c
++++ b/common/sys/string.c
+@@ -669,7 +669,7 @@ size_t
+ str_iconv(
+ 	  const char *fromcode,	/* charset of source string */
+ 	  const char *tocode,	/* charset of destination string */
+-	  const char *src,	/* source string */
++	  char *src,	/* source string */
+ 	  size_t srclen,		/* source string length */
+ 	  char *dst,		/* destination string */
+ 	  size_t dstlen)
+diff --git a/include/cmsys.h b/include/cmsys.h
+index 0c56cd71..68107e68 100644
+--- a/include/cmsys.h
++++ b/include/cmsys.h
+@@ -126,7 +126,7 @@ unsigned DBCS_StringHash(const char *s);
+ size_t str_iconv(
+ 	  const char *fromcode,	/* charset of source string */
+ 	  const char *tocode,	/* charset of destination string */
+-	  const char *src,	/* source string */
++	  char *src,	/* source string */
+ 	  size_t srclen,		/* source string length */
+ 	  char *dst,		/* destination string */
+ 	  size_t dstlen);
+-- 
+2.47.2
+

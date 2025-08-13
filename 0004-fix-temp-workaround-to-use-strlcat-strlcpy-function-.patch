@@ -1,0 +1,36 @@
+From dd11e1432ecb6e7679780311f7a350b01df3139f Mon Sep 17 00:00:00 2001
+From: r2 <r2@d2.clam.moe>
+Date: Wed, 13 Aug 2025 14:45:18 +0800
+Subject: [PATCH 4/4] fix: temp workaround to use strlcat strlcpy function of
+ glic
+
+---
+ include/osdep.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/include/osdep.h b/include/osdep.h
+index ed8bbd2a..852d046e 100644
+--- a/include/osdep.h
++++ b/include/osdep.h
+@@ -18,12 +18,12 @@
+ #include <sys/file.h>      /* for flock() */
+ #include <strings.h>       /* for strcasecmp() */
+ 
+-#if !defined(__has_builtin) || !__has_builtin(strlcpy)
+-#define NEED_STRLCPY
+-#endif
+-#if !defined(__has_builtin) || !__has_builtin(strlcat)
+-#define NEED_STRLCAT
+-#endif
++//#if !defined(__has_builtin) || !__has_builtin(strlcpy)
++//#define NEED_STRLCPY
++//#endif
++//#if !defined(__has_builtin) || !__has_builtin(strlcat)
++//#define NEED_STRLCAT
++//#endif
+ 
+ #define NEED_SETPROCTITLE
+ 
+-- 
+2.47.2
+
