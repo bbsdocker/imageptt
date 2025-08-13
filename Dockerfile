@@ -1,11 +1,10 @@
-ARG MY_DEBIAN_VERSION
+ARG MY_DEBIAN_VERSION=trixie
 FROM quay.io/lib/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
 
 COPY confs /tmp/confs
 COPY patches /tmp/patches
 COPY build_ptt.sh /tmp/build_ptt.sh
 
-ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
 ENV DEBIAN_FRONTEND=noninteractive
 RUN set -x \
@@ -34,7 +33,6 @@ RUN bash /tmp/build_ptt.sh
 
 ############ stage 2
 
-ARG MY_DEBIAN_VERSION
 FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim AS stage-fileselector
 COPY --from=pttbbs-builder /home/bbs /home/bbs
 RUN rm -rvf /home/bbs/pttbbs
@@ -42,11 +40,9 @@ RUN rm -rvf /home/bbs/.cache
 
 ############ stage 3
 
-ARG MY_DEBIAN_VERSION
 FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim
 COPY --from=stage-fileselector /home/bbs /home/bbs
 
-ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
 RUN set -x \
     && groupadd --gid 99 bbs \
