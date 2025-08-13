@@ -58,7 +58,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v5
         with:
-          push: false
+          push: true
           tags: |
             ghcr.io/bbsdocker/imageptt:${{ matrix.debien_image_ver_name }}
             ghcr.io/bbsdocker/imageptt:${{ matrix.debien_image_ver_name }}-latest
