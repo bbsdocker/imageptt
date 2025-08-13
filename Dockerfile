@@ -7,6 +7,7 @@ COPY build_ptt.sh /tmp/build_ptt.sh
 
 ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION ${MY_DEBIAN_VERSION}
+ENV DEBIAN_FRONTEND noninteractive
 RUN set -x \
     && groupadd --gid 99 bbs \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
@@ -25,12 +26,11 @@ RUN set -x \
         libevent-dev \
         pkg-config \
         git \
-        ccache \
-        clang
+        ccache
 
 USER bbs
 WORKDIR /home/bbs
-RUN sh /tmp/build_ptt.sh
+RUN bash /tmp/build_ptt.sh
 
 ############ stage 2
 

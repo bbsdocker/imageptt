@@ -1,0 +1,39 @@
+From 9eb5d462135e9ed04aee2673f77a6e8c23efa2b0 Mon Sep 17 00:00:00 2001
+From: r2 <r2@d2.clam.moe>
+Date: Wed, 13 Aug 2025 17:54:27 +0800
+Subject: [PATCH 4/4] giving up use builtin to tell strl* exists
+
+---
+ include/osdep.h | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/include/osdep.h b/include/osdep.h
+index ed8bbd2a..fdf91ab4 100644
+--- a/include/osdep.h
++++ b/include/osdep.h
+@@ -1,6 +1,8 @@
+ #ifndef OSDEP_H__
+ #define OSDEP_H__
+ 
++#include "../pttbbs.conf"
++
+ #ifdef __GNUC__
+ #define GCC_CHECK_FORMAT(a,b) __attribute__ ((format (printf, a, b)))
+ #else
+@@ -18,13 +20,6 @@
+ #include <sys/file.h>      /* for flock() */
+ #include <strings.h>       /* for strcasecmp() */
+ 
+-#if !defined(__has_builtin) || !__has_builtin(strlcpy)
+-#define NEED_STRLCPY
+-#endif
+-#if !defined(__has_builtin) || !__has_builtin(strlcat)
+-#define NEED_STRLCAT
+-#endif
+-
+ #define NEED_SETPROCTITLE
+ 
+ #elif ! defined(__FreeBSD__) || ! defined( DARWIN )
+-- 
+2.47.2
+

@@ -1,4 +1,4 @@
-From bfb32f58db6bb22a9b722b8b43c36767b5c744de Mon Sep 17 00:00:00 2001
+From fd478b1bcb01142dae93c66125a111aafb957b2b Mon Sep 17 00:00:00 2001
 From: r2 <r2@d2.clam.moe>
 Date: Wed, 13 Aug 2025 14:41:49 +0800
 Subject: [PATCH 3/4] fix: let str_iconv input compatible with iconv

@@ -1,4 +1,4 @@
-From f11b7a528aa5f47a0bb3fa3039d5c13b382c2b02 Mon Sep 17 00:00:00 2001
+From f0cbeb372fa0b49dd47a321fa73de7112ad35b9e Mon Sep 17 00:00:00 2001
 From: holishing <holishing@ccns.ncku.edu.tw>
 Date: Sun, 28 Apr 2024 01:21:49 +0800
 Subject: [PATCH 2/4] util/topusr.c: fix implicit argument problem

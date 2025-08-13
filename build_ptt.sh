@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 export BBSHOME=${HOME}
 
@@ -13,6 +13,11 @@ cd ${BBSHOME}/pttbbs
 cp -v /tmp/confs/pttbbs_conf ${BBSHOME}/pttbbs/pttbbs.conf
 cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
 git apply /tmp/patches/*.patch
+GLIBC_2_VERSION=$(ldd --version | grep GLIBC | sed 's/.*2\.//g')
+if (( ${GLIBC_2_VERSION} < 38 )); then
+    echo "#define NEED_STRLCPY" | tee -a ${BBSHOME}/pttbbs/pttbbs.conf
+    echo "#define NEED_STRLCAT" | tee -a ${BBSHOME}/pttbbs/pttbbs.conf
+fi
 # use "pmake" as alias for supporting bmake using NetBSD specific Makefile rules 
 pmake all install
 
