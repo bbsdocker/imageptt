@@ -83,7 +83,7 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.debien_image_ver_name }}-arm64
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.debien_image_ver_name }}-arm64-${{ steps.date.outputs.date }}
-          platforms: linux/amd64
+          platforms: linux/arm64
           build-args: |
             MY_DEBIAN_VERSION=${{ matrix.debien_image_ver_name }}
             MY_DEBIAN_VERSION_NUMBER=${{ matrix.debien_image_ver_number }}
