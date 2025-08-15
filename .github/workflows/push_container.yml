@@ -1,4 +1,4 @@
-name: push container for Debian Bookworm
+name: Generate and Push 3rd Party Container Image for PttBBS
 
 on:
   push:
