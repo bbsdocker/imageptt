@@ -11,8 +11,9 @@ RUN set -x \
     && groupadd --gid 99 bbs \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
-    && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
-    && apt-get update \
+    && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         bmake \
         gcc \
