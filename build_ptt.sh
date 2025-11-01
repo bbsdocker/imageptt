@@ -13,10 +13,6 @@ cd ${BBSHOME}/pttbbs
 cp -v /tmp/confs/pttbbs_conf ${BBSHOME}/pttbbs/pttbbs.conf
 cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
 git apply /tmp/patches/*.patch
-GLIBC_2_VERSION=$(ldd --version | grep GLIBC | sed 's/.*2\.//g')
-if (( ${GLIBC_2_VERSION} < 38 )); then
-    sed -i '2a#define NEED_STRLCPY\n#define NEED_STRLCAT' ${BBSHOME}/pttbbs/include/osdep.h
-fi
 # use "pmake" as alias for supporting bmake using NetBSD specific Makefile rules 
 pmake all install
 
