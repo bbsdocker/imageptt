@@ -2,7 +2,8 @@ ARG MY_DEBIAN_VERSION=trixie
 FROM docker.io/library/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
 
 COPY confs /tmp/confs
-COPY patches /tmp/patches
+## if some bugs in new distro version, workaround here may be enabled:
+#COPY patches /tmp/patches
 COPY build_ptt.sh /tmp/build_ptt.sh
 
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
