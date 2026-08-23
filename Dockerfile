@@ -1,4 +1,6 @@
+## Global docker arguments
 ARG MY_DEBIAN_VERSION=trixie
+
 FROM docker.io/library/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
 
 COPY confs /tmp/confs
@@ -6,6 +8,7 @@ COPY confs /tmp/confs
 #COPY patches /tmp/patches
 COPY build_ptt.sh /tmp/build_ptt.sh
 
+ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
 ENV DEBIAN_FRONTEND=noninteractive
 RUN set -x \
@@ -51,6 +54,7 @@ RUN rm -rvf /home/bbs/.cache
 FROM docker.io/library/debian:${MY_DEBIAN_VERSION}-slim
 COPY --from=stage-fileselector /home/bbs /home/bbs
 
+ARG MY_DEBIAN_VERSION
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
 RUN set -x \
     && groupadd --gid 99 bbs \
