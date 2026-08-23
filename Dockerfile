@@ -1,5 +1,5 @@
 ARG MY_DEBIAN_VERSION=trixie
-FROM quay.io/lib/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
+FROM docker.io/library/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
 
 COPY confs /tmp/confs
 COPY patches /tmp/patches
@@ -13,7 +13,12 @@ RUN set -x \
     && rm /etc/localtime \
     && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 
-RUN apt-get update \
+RUN if [ "$DEBIAN_VERSION" = "bookworm" ]; then \
+        LIBEVENT_PACKAGE="libevent-2.1"; \
+    else \
+        LIBEVENT_PACKAGE="libevent-2.1-7t64"; \
+    fi \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         bmake \
         gcc \
@@ -22,11 +27,12 @@ RUN apt-get update \
         ca-certificates \
         python3 \
         python-is-python3 \
-        "libevent-2.1$(if [ $DEBIAN_VERSION = trixie ];then echo "-7t64";fi)" \
+        "$LIBEVENT_PACKAGE" \
         libevent-dev \
         pkg-config \
         git \
-        ccache
+        ccache \
+        golang
 
 USER bbs
 WORKDIR /home/bbs
@@ -34,14 +40,14 @@ RUN bash /tmp/build_ptt.sh
 
 ############ stage 2
 
-FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim AS stage-fileselector
+FROM docker.io/library/debian:${MY_DEBIAN_VERSION}-slim AS stage-fileselector
 COPY --from=pttbbs-builder /home/bbs /home/bbs
 RUN rm -rvf /home/bbs/pttbbs
 RUN rm -rvf /home/bbs/.cache
 
 ############ stage 3
 
-FROM quay.io/lib/debian:${MY_DEBIAN_VERSION}-slim
+FROM docker.io/library/debian:${MY_DEBIAN_VERSION}-slim
 COPY --from=stage-fileselector /home/bbs /home/bbs
 
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
