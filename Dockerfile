@@ -24,7 +24,7 @@ RUN if [ "$DEBIAN_VERSION" = "bookworm" ]; then \
     fi \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        bmake \
+        make \
         gcc \
         g++ \
         libc6-dev \

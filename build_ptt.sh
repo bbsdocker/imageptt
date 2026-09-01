@@ -14,21 +14,20 @@ cp -v /tmp/confs/pttbbs_conf ${BBSHOME}/pttbbs/pttbbs.conf
 cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
 ## if some bugs in new distro version, workaround here may be enabled:
 #git apply /tmp/patches/*.patch
-# use "pmake" as alias for supporting bmake using NetBSD specific Makefile rules 
-pmake all install
+make all install
 
 ## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
-pmake all install
+make all install
 
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
-pmake install
+make install
 cp -v etc/reg.methods ${BBSHOME}/etc/
 
 ## Clear object near source code
 cd ${BBSHOME}/pttbbs
-pmake clean
+make clean
 
 ## Startup basic BBS Structure
 ${BBSHOME}/bin/initbbs -DoIt
