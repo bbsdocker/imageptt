@@ -14,7 +14,17 @@ cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
 cd ${BBSHOME}/pttbbs
 ## if some bugs in new distro version, workaround here may be enabled:
 git apply /tmp/patches/*.patch
-make CFLAGS+=" -fsigned-char"
+
+cd ${BBSHOME}/pttbbs/common
+make CFLAGS+=" -fsigned-char" all
+
+cd ${BBSHOME}/pttbbs/mbbsd
+make CFLAGS+=" -fsigned-char" all
+
+cd ${BBSHOME}/pttbbs/util
+make CFLAGS+=" -fsigned-char" all
+
+cd ${BBSHOME}/pttbbs
 make install
 
 ## install logind for enabling websocket feature
