@@ -1,0 +1,25 @@
+From 5f69fd47134ca5f132026760ee9a9c78cf61b359 Mon Sep 17 00:00:00 2001
+From: r2 <r2.bbs@bbs.clam.moe>
+Date: Wed, 2 Sep 2026 02:07:59 +0000
+Subject: [PATCH] fix: workaround with signed char problems in arm64
+
+---
+ pttbbs.mk | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/pttbbs.mk b/pttbbs.mk
+index 7dfa836b..ea35d612 100644
+--- a/pttbbs.mk
++++ b/pttbbs.mk
+@@ -37,6 +37,8 @@ PTT_CFLAGS+=	-Qunused-arguments -Wno-parentheses-equality \
+ PTT_CXXFLAGS+=	-Wno-invalid-source-encoding
+ endif
+ 
++PTT_CFLAGS+=   -fsigned-char
++
+ # enable assert()
+ #PTT_CFLAGS+=	-DNDEBUG 
+ 
+-- 
+2.47.3
+

@@ -16,21 +16,20 @@ cd ${BBSHOME}/pttbbs
 git apply /tmp/patches/*.patch
 
 cd ${BBSHOME}/pttbbs/common
-make CFLAGS+=" -fsigned-char" all
+make
 
 cd ${BBSHOME}/pttbbs/mbbsd
-make CFLAGS+=" -fsigned-char" all
+make
 
 cd ${BBSHOME}/pttbbs/util
-make CFLAGS+=" -fsigned-char" all
+make
 
 cd ${BBSHOME}/pttbbs
 make install
 
 ## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
-make CFLAGS+=" -fsigned-char"
-make install
+make all install
 
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
