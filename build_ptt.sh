@@ -18,10 +18,6 @@ ckati --ninja all
 ./ninja.sh
 
 ## install logind for enabling websocket feature
-cd ${BBSHOME}/pttbbs/services
-make all install
-
-## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
 make all install
 
