@@ -1,11 +1,11 @@
 ## Global docker arguments
 ARG MY_DEBIAN_VERSION=trixie
 
-FROM docker.io/library/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder
+FROM docker.io/library/debian:${MY_DEBIAN_VERSION} AS pttbbs-builder-base
 
 COPY confs /tmp/confs
 ## if some bugs in new distro version, workaround here may be enabled:
-#COPY patches /tmp/patches
+COPY patches /tmp/patches
 COPY build_ptt.sh /tmp/build_ptt.sh
 
 ARG MY_DEBIAN_VERSION
@@ -25,6 +25,7 @@ RUN if [ "$DEBIAN_VERSION" = "bookworm" ]; then \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         make \
+        clang \
         gcc \
         g++ \
         libc6-dev \
@@ -36,8 +37,12 @@ RUN if [ "$DEBIAN_VERSION" = "bookworm" ]; then \
         pkg-config \
         git \
         ccache \
-        golang
+        golang \
+        ckati \
+        ninja-build
 
+############ stage 1-2
+FROM pttbbs-builder-base AS pttbbs-builder
 USER bbs
 WORKDIR /home/bbs
 RUN bash /tmp/build_ptt.sh

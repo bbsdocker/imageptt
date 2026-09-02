@@ -9,11 +9,16 @@ set -eux
 
 ## clone current repo, build and install it
 git clone https://github.com/ptt/pttbbs.git ${BBSHOME}/pttbbs
-cd ${BBSHOME}/pttbbs
 cp -v /tmp/confs/pttbbs_conf ${BBSHOME}/pttbbs/pttbbs.conf
 cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
+cd ${BBSHOME}/pttbbs
 ## if some bugs in new distro version, workaround here may be enabled:
-#git apply /tmp/patches/*.patch
+git apply /tmp/patches/*.patch
+ckati --ninja all
+./ninja.sh
+
+## install logind for enabling websocket feature
+cd ${BBSHOME}/pttbbs/services
 make all install
 
 ## install logind for enabling websocket feature
