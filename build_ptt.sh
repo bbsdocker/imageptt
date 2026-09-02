@@ -14,13 +14,13 @@ cp -v /tmp/confs/initbbs_c ${BBSHOME}/pttbbs/util/initbbs.c
 cd ${BBSHOME}/pttbbs
 ## if some bugs in new distro version, workaround here may be enabled:
 git apply /tmp/patches/*.patch
-ckati --ninja all
-./ninja.sh
+make CFLAGS+=" -fsigned-char"
 make install
 
 ## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
-make all install
+make CFLAGS+=" -fsigned-char"
+make install
 
 ## Bootstrap sample BBS theme
 cd ${BBSHOME}/pttbbs/sample
