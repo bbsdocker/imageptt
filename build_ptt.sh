@@ -16,6 +16,7 @@ cd ${BBSHOME}/pttbbs
 git apply /tmp/patches/*.patch
 ckati --ninja all
 ./ninja.sh
+make install
 
 ## install logind for enabling websocket feature
 cd ${BBSHOME}/pttbbs/daemon/logind
