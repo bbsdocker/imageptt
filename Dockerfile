@@ -9,18 +9,27 @@ COPY patches /tmp/patches
 COPY build_ptt.sh /tmp/build_ptt.sh
 
 ARG MY_DEBIAN_VERSION
+ARG MY_DEBIAN_VERSION_NUMBER
+ARG USE_TWDS_MIRROR
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
+ENV DEBIAN_VERSION_NUMBER=${MY_DEBIAN_VERSION_NUMBER}
 ENV DEBIAN_FRONTEND=noninteractive
+ENV USE_TWDS_MIRROR=${USE_TWDS_MIRROR}
 RUN set -x \
     && groupadd --gid 99 bbs \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
     && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime
 
-RUN if [ "$DEBIAN_VERSION" = "bookworm" ]; then \
+RUN env \
+    && echo "Debian Version: $DEBIAN_VERSION ($DEBIAN_VERSION_NUMBER)" \
+    && if [ "$DEBIAN_VERSION" = "bookworm" ]; then \
         LIBEVENT_PACKAGE="libevent-2.1"; \
     else \
         LIBEVENT_PACKAGE="libevent-2.1-7t64"; \
+    fi \
+    && if [ "$USE_TWDS_MIRROR" = 1 ]; then \
+        sed -i 's|deb.debian.org|mirror.twds.com.tw|g' /etc/apt/sources.list.d/debian.sources; \
     fi \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
