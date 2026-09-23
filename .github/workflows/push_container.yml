@@ -13,13 +13,11 @@ env:
 
 jobs:
   image-build-amd64:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       matrix:
         include:
-          # Build AMD64 images on ubuntu-24.04
-          - debien_image_ver_name: bookworm
-            debien_image_ver_number: 12
+          # Build AMD64 images on ubuntu-26.04
           - debien_image_ver_name: trixie
             debien_image_ver_number: 13
     steps:
@@ -48,13 +46,11 @@ jobs:
             MY_DEBIAN_VERSION=${{ matrix.debien_image_ver_name }}
             MY_DEBIAN_VERSION_NUMBER=${{ matrix.debien_image_ver_number }}
   image-build-arm64:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     strategy:
       matrix:
         include:
-          # Build ARM64 images on ubuntu-24.04
-          - debien_image_ver_name: bookworm
-            debien_image_ver_number: 12
+          # Build ARM64 images on ubuntu-26.04
           - debien_image_ver_name: trixie
             debien_image_ver_number: 13
     steps:
@@ -84,7 +80,7 @@ jobs:
             MY_DEBIAN_VERSION_NUMBER=${{ matrix.debien_image_ver_number }}
   create-manifest:
     needs: [image-build-amd64, image-build-arm64]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: docker/login-action@v3
         with:
@@ -104,10 +100,3 @@ jobs:
           docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie
           docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Create and Push Manifest for Debian 12
-        run: |
-          docker manifest create ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm-amd64 \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm-arm64
-
-          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:bookworm
