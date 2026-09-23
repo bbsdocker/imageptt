@@ -69,12 +69,17 @@ FROM docker.io/library/debian:${MY_DEBIAN_VERSION}-slim
 COPY --from=stage-fileselector /home/bbs /home/bbs
 
 ARG MY_DEBIAN_VERSION
+ARG USE_TWDS_MIRROR
 ENV DEBIAN_VERSION=${MY_DEBIAN_VERSION}
+ENV USE_TWDS_MIRROR=${USE_TWDS_MIRROR}
 RUN set -x \
     && groupadd --gid 99 bbs \
     && useradd -m -g bbs -s /bin/bash --uid 9999 bbs \
     && rm /etc/localtime \
     && ln -rsv /usr/share/zoneinfo/Asia/Taipei /etc/localtime \
+    && if [ "$USE_TWDS_MIRROR" = 1 ]; then \
+        sed -i 's|deb.debian.org|mirror.twds.com.tw|g' /etc/apt/sources.list.d/debian.sources; \
+    fi  \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         "libevent-2.1$(if [ $DEBIAN_VERSION = trixie ];then echo "-7t64";fi)" \
