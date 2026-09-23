@@ -1,0 +1,30 @@
+From 7ceb3e0899a30dfb22d653628c417081213d3c5a Mon Sep 17 00:00:00 2001
+From: r2 <r2.bbs@bbs.clam.moe>
+Date: Tue, 22 Sep 2026 15:15:46 +0000
+Subject: [PATCH] fix: use wchar_t for wcwidth interval bounds
+
+Match interval boundary types with the wchar_t code point passed to
+bisearch(), avoiding signedness comparison errors on platforms where
+wchar_t is unsigned, such as ARM64.
+---
+ common/sys/wcwidth.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/common/sys/wcwidth.c b/common/sys/wcwidth.c
+index 055f576a..e8af6665 100644
+--- a/common/sys/wcwidth.c
++++ b/common/sys/wcwidth.c
+@@ -63,8 +63,8 @@
+ #include <wchar.h>
+ 
+ struct interval {
+-  int first;
+-  int last;
++  wchar_t first;
++  wchar_t last;
+ };
+ 
+ /* auxiliary function for binary search in interval table */
+-- 
+2.47.3
+
