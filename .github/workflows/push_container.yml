@@ -89,14 +89,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create and Push Manifest for Debian 13
         run: |
-          docker manifest create ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie \
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-amd64 \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-arm64
 
-          docker manifest create ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+          docker buildx imagetools create \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-amd64 \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie-arm64
-
-          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:trixie
-          docker manifest push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
