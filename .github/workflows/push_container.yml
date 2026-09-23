@@ -14,12 +14,17 @@ env:
 jobs:
   image-build-amd64:
     runs-on: ubuntu-26.04
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
+      fail-fast: false
       matrix:
         include:
-          # Build AMD64 images on ubuntu-26.04
           - debien_image_ver_name: trixie
             debien_image_ver_number: 13
+            experimental: false
+          - debien_image_ver_name: sid
+            debien_image_ver_number: 14
+            experimental: true
     steps:
       -
         name: Get current date
@@ -50,9 +55,12 @@ jobs:
     strategy:
       matrix:
         include:
-          # Build ARM64 images on ubuntu-26.04
           - debien_image_ver_name: trixie
             debien_image_ver_number: 13
+            experimental: false
+          - debien_image_ver_name: sid
+            debien_image_ver_number: 14
+            experimental: true
     steps:
       -
         name: Get current date
@@ -87,6 +95,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      ## Note: sid version is not going to be created manifest FOR PURPOSE
       - name: Create and Push Manifest for Debian 13
         run: |
           docker buildx imagetools create \
